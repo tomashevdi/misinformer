@@ -1,0 +1,115 @@
+<div class="ui-g ui-fluid" *ngIf="msgGroup.predefined">
+  <div class="ui-g-2">
+  <span class="ui-float-label">
+    <input id="name" type="text"  pInputText [(ngModel)]="msgGroup.name">
+    <label for="name">Название группы</label>
+  </span>
+  </div>
+  <div class="ui-g-4">
+  <span class="ui-float-label">
+    <input id="comment" type="text"  pInputText [(ngModel)]="msgGroup.comment">
+    <label for="comment">Примечание</label>
+  </span>
+  </div>
+  <div class="ui-g-2">
+    <button pButton type="button" label="Сохранить" (click)="onSave()"></button>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-8">
+    <p-pickList
+      [source]="mGroupsSource"
+      [target]="mGroups"
+      sourceHeader="Сохраненные группы"
+      targetHeader="Выбор"
+      [responsive]="true"
+      filterBy="name"
+      dragdrop="true"
+      [sourceStyle]="{ height: '300px' }"
+      [targetStyle]="{ height: '300px' }"
+      [showSourceControls]="false"
+      [showTargetControls]="false"
+    >
+      <ng-template let-mg pTemplate="item">
+        <div class="ui-helper-clearfix">
+         <!-- (НЕ <p-checkbox [(ngModel)]="mg.notFlag" binary="true"></p-checkbox> ) -->
+          {{ mg.name }}
+        </div>
+      </ng-template>
+    </p-pickList>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-8">
+    <p-pickList
+      [source]="usersSource"
+      [target]="users"
+      sourceHeader="Пользователи"
+      targetHeader="Выбор"
+      [responsive]="true"
+      filterBy="name,samaccountName"
+      dragdrop="true"
+      [sourceStyle]="{ height: '300px' }"
+      [targetStyle]="{ height: '300px' }"
+      [showSourceControls]="false"
+      [showTargetControls]="false"
+    >
+      <ng-template let-user pTemplate="item">
+        <div class="ui-helper-clearfix">
+          (НЕ
+          <p-checkbox [(ngModel)]="user.notFlag" binary="true"></p-checkbox> )
+          {{ user.name }} ({{ user.samaccountName }})
+        </div>
+      </ng-template>
+    </p-pickList>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-8">
+    <p-pickList
+      [source]="ouSource"
+      [target]="ou"
+      sourceHeader="Подразделения пользователей"
+      targetHeader="Выбор"
+      [responsive]="true"
+      filterBy="name,dn"
+      dragdrop="true"
+      [sourceStyle]="{ height: '300px' }"
+      [targetStyle]="{ height: '300px' }"
+      [showSourceControls]="false"
+      [showTargetControls]="false"
+    >
+      <ng-template let-ou pTemplate="item">
+        <div class="ui-helper-clearfix">
+          (НЕ <p-checkbox [(ngModel)]="ou.notFlag" binary="true"></p-checkbox> )
+          {{ ou.name }} ({{ ou.dn }})
+        </div>
+      </ng-template>
+    </p-pickList>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-8">
+    <p-pickList
+      [source]="groupsSource"
+      [target]="groups"
+      sourceHeader="Группы пользователей"
+      targetHeader="Выбор (вложенные группы не учитываются!)"
+      [responsive]="true"
+      filterBy="name"
+      dragdrop="true"
+      [sourceStyle]="{ height: '300px' }"
+      [targetStyle]="{ height: '300px' }"
+      [showSourceControls]="false"
+      [showTargetControls]="false"
+    >
+      <ng-template let-group pTemplate="item">
+        <div class="ui-helper-clearfix">
+          (НЕ
+          <p-checkbox [(ngModel)]="group.notFlag" binary="true"></p-checkbox> )
+          {{ group.name }}
+        </div>
+      </ng-template>
+    </p-pickList>
+  </div>
+</div>

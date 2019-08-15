@@ -1,0 +1,95 @@
+<p-tabView>
+  <p-tabPanel header="Сообщение">
+    <div class="ui-g ui-fluid" style="margin-top: 20px;">
+      <div class="ui-g-1">
+        <span class="ui-float-label">
+          <input id="date" type="date" pInputText [(ngModel)]="msg.date">
+          <label for="date">Дата</label>
+        </span>
+      </div>
+      <div class="ui-g-2">
+        <span class="ui-float-label">
+          <input id="name" type="text" pInputText [(ngModel)]="msg.author">
+          <label for="name">Автор</label>
+        </span>
+      </div>
+      <div class="ui-g-3">
+        <span class="ui-float-label">
+          <input id="subject" type="text" pInputText [(ngModel)]="msg.subject">
+          <label for="subject">Тема</label>
+        </span>
+      </div>
+      <div class="ui-g-1">
+        <button pButton type="button" [label]="msg.id ? 'Сохранить' : 'Создать'" (click)="onSave()"></button>
+      </div>
+      <div class="ui-g-1">
+        <button pButton type="button" class="ui-button-danger" label="Удалить" (click)="onDelete()" *ngIf="msg.id"></button>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-1">
+        <p-checkbox [(ngModel)]="msg.important" binary="true" label="Важно"></p-checkbox>
+      </div>
+      <div class="ui-g-2">
+        <p-checkbox [(ngModel)]="msg.needConfirm" binary="true" label="Требовать подтверждения" disabled></p-checkbox>
+      </div>
+      <div class="ui-g-3">
+        <span class="ui-float-label">
+            <input id="question" type="text" pInputText [(ngModel)]="msg.needAnswer">
+            <label for="question">Вопрос (при требовании ответа)</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-1">
+        Срок отображения :
+      </div>
+      <div class="ui-g-1">
+          <input id="dateS" type="date" pInputText [(ngModel)]="msg.startDate">
+      </div>
+      <div class="ui-g-1">
+          <input id="dateF" type="date" pInputText [(ngModel)]="msg.stopDate">
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-8">
+        <p-editor [(ngModel)]="msg.text" [style]="{'height':'320px'}"></p-editor>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Адресаты">
+    <app-groups #groupsComponent></app-groups>
+  </p-tabPanel>
+
+  <p-tabPanel header="Отслеживание сообщение" *ngIf="msg.id">
+    <p-table #dt [columns]="colsRM" [value]="readMarks" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+          <th style="width:4em"></th>
+        </tr>
+        <tr>
+          <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            <input *ngSwitchCase="'userName'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+            <input *ngSwitchCase="'computerName'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+            <input *ngSwitchCase="'answer'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+          </th>
+          <th style="width:4em"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            {{rowData[col.field]}}
+          </td>
+          <td>
+            <button pButton icon="fa fa-trash" (click)="deleteReadMark(rowData.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>

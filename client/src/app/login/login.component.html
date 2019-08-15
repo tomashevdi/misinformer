@@ -1,0 +1,22 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12" style="text-align: center;">
+    <h1>ГП №106 Информер</h1>
+  </div>
+  <div class="ui-g-12">
+    <span class="ui-float-label">
+      <input id="username" type="text" size="30" pInputText [formControl]="username">
+      <label for="username">Имя пользователя</label>
+    </span>
+  </div>
+  <div class="ui-g-12">
+    <span class="ui-float-label">
+      <input id="password" type="password" size="30" pPassword [feedback]="false" [formControl]="password">
+      <label for="password">Пароль</label>
+    </span>
+  </div>
+  <div class="ui-g-12">
+    <button icon="fa fa-check" pButton (click)="login()" label="Войти"></button>
+  </div>
+</div>
+
+

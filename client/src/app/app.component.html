@@ -1,0 +1,6 @@
+<p-toast></p-toast>
+<div style="position: absolute;right: 10px;top: 15px;">
+  <a href="#" (click)="onLogout()">{{ (auth.user | async).name }}</a>
+</div>
+<p-tabMenu [model]="items"></p-tabMenu>
+<router-outlet></router-outlet>

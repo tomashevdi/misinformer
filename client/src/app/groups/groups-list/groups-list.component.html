@@ -1,0 +1,38 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-1 ui-g-offset-10">
+    <button type="button" pButton icon="fa fa-file" label="Создать" (click)="onNew()"></button>
+  </div>
+  <div class="ui-g-1">
+    <button type="button" pButton icon="fa fa-refresh" label="Обновить" (click)="onRefresh()"></button>
+  </div>
+</div>
+<div class="ui-fluid">
+<p-table #dt [columns]="cols" [value]="(mgs.mGroups) | async" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+      <th style="width:4em"></th>
+    </tr>
+    <tr>
+      <th *ngFor="let col of columns" [ngSwitch]="col.field">
+        <input *ngSwitchCase="'name'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+        <input *ngSwitchCase="'comment'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+      </th>
+      <th style="width:4em"></th>
+    </tr>
+    <th style="width:4em"></th>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+      <td>
+        <button pButton icon="fa fa-edit" (click)="router.navigate(['/groups',rowData.id])"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
